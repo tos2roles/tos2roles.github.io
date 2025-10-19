@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Role → Faction Generator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="card">
+    <h1>Role > Faction Generator</h1>
+
+    <div class="input-group">
+      <label for="role">Role</label>
+      <input list="roles" id="role" placeholder="e.g. Coven Leader">
+      <datalist id="roles"></datalist>
+    </div>
+
+    <div class="input-group">
+      <label for="faction">Faction</label>
+      <input list="factions" id="faction" placeholder="e.g. Coven">
+      <datalist id="factions"></datalist>
+    </div>
+
+    <button id="generate">Generate</button>
+
+    <div id="output" class="output hidden">
+      <span id="resultText"></span>
+      <button id="copyBtn" title="Copy">📋</button>
+    </div>
+
+    <p class="footer">Made with ❤️ by rinq</p>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

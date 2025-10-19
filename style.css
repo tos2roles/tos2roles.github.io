@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  height: 100vh;
+  background: radial-gradient(circle at top, #2a2a72, #000) no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(15px);
+  border-radius: 16px;
+  padding: 40px 35px;
+  width: 90%;
+  max-width: 420px;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.4);
+  text-align: center;
+  animation: fadeIn 0.5s ease;
+}
+
+h1 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  background: linear-gradient(90deg, #7b61ff, #9b72ff);
+  background-clip: border-box;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 1.5rem;
+}
+
+.input-group {
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.input-group label {
+  font-size: 0.9rem;
+  color: #ccc;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 0.95rem;
+  transition: 0.3s ease;
+  outline: none;
+}
+
+.input-group input:focus {
+  border-color: #8c6cff;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+button#generate {
+  width: 100%;
+  margin-top: 10px;
+  padding: 12px 0;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #7b61ff, #a57bff);
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 15px rgba(123, 97, 255, 0.3);
+}
+
+button#generate:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(123, 97, 255, 0.5);
+}
+
+.output {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  margin-top: 1.2rem;
+  padding: 10px 14px;
+  font-size: 0.9rem;
+  animation: fadeIn 0.3s ease;
+}
+
+.output.hidden {
+  display: none;
+}
+
+#copyBtn {
+  background: none;
+  border: none;
+  color: #a47bff;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+#copyBtn:hover {
+  color: #cda3ff;
+}
+
+.footer {
+  font-size: 0.8rem;
+  color: #aaa;
+  margin-top: 1.5rem;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
