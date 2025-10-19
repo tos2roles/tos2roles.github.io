@@ -32,7 +32,7 @@ body {
 h1 {
   font-size: 1.6rem;
   font-weight: 600;
-  background: linear-gradient(90deg, #7b61ff, #9b72ff);
+  background: linear-gradient(90deg, #7b61ff, #a57bff);
   background-clip: border-box;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -61,6 +61,12 @@ h1 {
   font-size: 0.95rem;
   transition: 0.3s ease;
   outline: none;
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px rgba(255,255,255,0.08) inset !important;
+  -webkit-text-fill-color: #fff !important;
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 .input-group input:focus {
@@ -132,5 +138,19 @@ button#generate:hover {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@media (max-width: 500px) {
+  .card {
+    padding: 30px 25px;
+  }
+
+  h1 {
+    font-size: 1.4rem;
+  }
+
+  button#generate {
+    font-size: 0.95rem;
   }
 }
