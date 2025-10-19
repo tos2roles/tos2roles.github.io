@@ -42,6 +42,7 @@ h1 {
 .input-group {
   margin-bottom: 1rem;
   text-align: left;
+  position: relative;
 }
 
 .input-group label {
@@ -49,39 +50,6 @@ h1 {
   color: #E6D6B1;
   margin-bottom: 6px;
   display: block;
-}
-
-.input-group select {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  width: 100%;
-  padding: 10px 14px;
-  background: #1a1410;
-  border: 2px solid #4a3520;
-  border-radius: 6px;
-  color: #E6D6B1;
-  font-size: 0.95rem;
-  outline: none;
-  transition: 0.2s ease;
-  box-shadow: inset 0 0 6px #000;
-  cursor: pointer;
-  
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23E6D6B1' d='M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-  padding-right: 35px;
-}
-
-.input-group select:focus {
-  border-color: #C1914B;
-  background: #211b16;
-}
-
-.input-group select option {
-    background: #0c0a08;
-    color: #E6D6B1;
-    padding: 10px;
 }
 
 .input-group input {
@@ -101,6 +69,53 @@ h1 {
   border-color: #C1914B;
   background: #211b16;
 }
+
+.autocomplete-items {
+  position: absolute;
+  border: 1px solid #4a3520;
+  border-top: none;
+  z-index: 99;
+  top: 100%;
+  left: 0;
+  right: 0;
+  max-height: 200px;
+  overflow-y: auto;
+  border-radius: 0 0 6px 6px;
+  background-color: #1a1410;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.1s, visibility 0.1s;
+}
+
+.autocomplete-items:not(:empty) {
+  visibility: visible;
+  opacity: 1;
+}
+
+.autocomplete-items div {
+  padding: 10px 14px;
+  cursor: pointer;
+  background-color: #1a1410;
+  border-bottom: 1px solid #2d241c;
+  color: #E6D6B1;
+  font-size: 0.95rem;
+  transition: background-color 0.1s;
+}
+
+.autocomplete-items div:last-child {
+  border-bottom: none;
+}
+
+.autocomplete-items div:hover {
+  background-color: #1a1410;
+}
+
+.autocomplete-active {
+  background-color: #3a2a16 !important;
+  color: #F5E1A4 !important;
+}
+
 
 button#generate {
   width: 100%;
