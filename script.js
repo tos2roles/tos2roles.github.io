@@ -92,63 +92,147 @@ const displayNames = {
   stoned: "Stoned"
 };
 
-function populateDropdowns(showBTOS2) {
-  const roleList = document.getElementById("role");
-  const factionSelect = document.getElementById("faction");
+let availableRoles = {};
+let availableFactions = {};
 
-  if (!roleList || !factionSelect) return;
-
-  roleList.innerHTML = '<option value="" disabled selected>Select a role</option>';
-  factionSelect.innerHTML = '<option value="" disabled selected>Select a faction</option>';
-
+function populateData(showBTOS2) {
   const roleTable = showBTOS2 ? btos2_roles : roles;
   const factionTable = showBTOS2 ? { ...factions, ...btos2_factions } : factions;
 
+  availableRoles = {};
   Object.keys(roleTable).forEach(r => {
     const name = displayNames[r] || r;
-    const option = document.createElement("option");
-    option.value = r;
-    option.textContent = name;
-    roleList.appendChild(option);
+    availableRoles[name] = r;
   });
-    
+
+  availableFactions = {};
   Object.keys(factionTable).forEach(f => {
-    const opt = document.createElement("option");
-    opt.value = f;
     const name = displayNames[f] || f.charAt(0).toUpperCase() + f.slice(1);
-    opt.textContent = name;
-    factionSelect.appendChild(opt);
+    availableFactions[name] = f;
+  });
+}
+
+function autocomplete(inp, dataMap) {
+  let currentFocus;
+  const arr = Object.keys(dataMap);
+  const listContainer = document.getElementById(inp.id.replace('-input', '-autocomplete-list'));
+
+  function closeAllLists(elmnt) {
+    listContainer.innerHTML = '';
+    currentFocus = -1;
+  }
+
+  inp.addEventListener("input", function(e) {
+    let i, val = this.value;
+    closeAllLists();
+
+    if (!val) { return false; }
+    currentFocus = -1;
+
+    let matchCount = 0;
+    for (i = 0; i < arr.length && matchCount < 20; i++) {
+      const item = arr[i];
+      if (item.toUpperCase().includes(val.toUpperCase())) {
+        matchCount++;
+        const itemElement = document.createElement("DIV");
+
+        const start = item.toUpperCase().indexOf(val.toUpperCase());
+        const end = start + val.length;
+
+        const before = item.substring(0, start);
+        const match = item.substring(start, end);
+        const after = item.substring(end);
+
+        itemElement.innerHTML = before + "<strong>" + match + "</strong>" + after;
+
+        itemElement.setAttribute('data-key', dataMap[item]);
+
+        itemElement.addEventListener("click", function(e) {
+          inp.value = this.textContent;
+          inp.setAttribute('data-canonical-key', this.getAttribute('data-key'));
+          closeAllLists();
+        });
+        listContainer.appendChild(itemElement);
+      }
+    }
+  });
+
+  inp.addEventListener("keydown", function(e) {
+    let x = listContainer.getElementsByTagName("div");
+    if (e.keyCode == 40) {
+      currentFocus++;
+      addActive(x);
+    } else if (e.keyCode == 38) {
+      currentFocus--;
+      addActive(x);
+    } else if (e.keyCode == 13) {
+      e.preventDefault();
+      if (currentFocus > -1) {
+        if (x) x[currentFocus].click();
+      } else {
+        const matchKey = dataMap[this.value];
+        this.setAttribute('data-canonical-key', matchKey || '');
+        closeAllLists();
+      }
+    }
+  });
+
+  function addActive(x) {
+    if (!x) return false;
+    removeActive(x);
+    if (currentFocus >= x.length) currentFocus = 0;
+    if (currentFocus < 0) currentFocus = (x.length - 1);
+    x[currentFocus].classList.add("autocomplete-active");
+  }
+
+  function removeActive(x) {
+    for (let i = 0; i < x.length; i++) {
+      x[i].classList.remove("autocomplete-active");
+    }
+  }
+
+  document.addEventListener("click", function (e) {
+    if (e.target !== inp && !listContainer.contains(e.target)) {
+      closeAllLists();
+    }
+    const matchKey = dataMap[inp.value];
+    inp.setAttribute('data-canonical-key', matchKey || '');
   });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    populateDropdowns(document.getElementById("btos2Toggle").checked);
+    const roleInput = document.getElementById("role-input");
+    const factionInput = document.getElementById("faction-input");
+    const btos2Toggle = document.getElementById("btos2Toggle");
+
+    populateData(btos2Toggle.checked);
+    autocomplete(roleInput, availableRoles);
+    autocomplete(factionInput, availableFactions);
+
 
     document.getElementById("generate").addEventListener("click", () => {
-      const role = document.getElementById("role").value.trim();
-      const faction = document.getElementById("faction").value.trim();
-      const showBTOS2 = document.getElementById("btos2Toggle").checked;
+      const role = roleInput.getAttribute('data-canonical-key');
+      const faction = factionInput.getAttribute('data-canonical-key');
+
+      const roleRaw = roleInput.value.trim();
 
       const resultText = document.getElementById("resultText");
       const output = document.getElementById("output");
       const copyBtn = document.getElementById("copyBtn");
 
-      if (!resultText) return;
-
-      const roleTable = showBTOS2 ? btos2_roles : roles;
-      const factionTable = showBTOS2 ? { ...factions, ...btos2_factions } : factions;
+      const roleTable = btos2Toggle.checked ? btos2_roles : roles;
+      const factionTable = btos2Toggle.checked ? { ...factions, ...btos2_factions } : factions;
       const factionColors = factionStyle;
 
-      const roleRaw = displayNames[role] || role.charAt(0).toUpperCase() + role.slice(1);
+      const roleKey = role ? roleTable[role] : undefined;
+      const factionKey = faction ? factionTable[faction] : undefined;
 
-      const roleKey = roleTable[role];
-      const factionKey = factionTable[faction];
 
-      if (!roleKey || role === "") {
-        resultText.textContent = "❌ Please select a role.";
+      if (!role || !roleKey) {
+        resultText.textContent = "❌ Please select a valid role.";
         copyBtn.style.display = "none";
-      } else if (!factionKey || faction === "") {
-        resultText.textContent = "❌ Please select a faction.";
+      } else if (!faction || !factionKey) {
+        resultText.textContent = "❌ Please select a valid faction.";
         copyBtn.style.display = "none";
       } else {
         const safeRole = roleRaw
@@ -168,7 +252,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.getElementById("btos2Toggle").addEventListener("change", (e) => {
       const showBTOS2 = e.target.checked;
-      populateDropdowns(showBTOS2);
+      populateData(showBTOS2);
+
+      document.getElementById("output").classList.add("hidden");
+
+      roleInput.value = '';
+      factionInput.value = '';
+      roleInput.removeAttribute('data-canonical-key');
+      factionInput.removeAttribute('data-canonical-key');
+
+      autocomplete(roleInput, availableRoles);
+      autocomplete(factionInput, availableFactions);
     });
 
     document.getElementById("copyBtn").addEventListener("click", () => {
