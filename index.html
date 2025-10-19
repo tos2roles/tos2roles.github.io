@@ -10,14 +10,16 @@
   <main class="card">
     <h1>Role > Faction Generator</h1>
 
-    <div class="input-group">
-      <label for="role">Role</label>
-      <select id="role"></select>
+    <div class="input-group" id="role-group">
+      <label for="role-input">Role</label>
+      <input type="text" id="role-input" placeholder="Start typing a role...">
+      <div id="role-autocomplete-list" class="autocomplete-items"></div>
     </div>
 
-    <div class="input-group">
-      <label for="faction">Faction</label>
-      <select id="faction"></select>
+    <div class="input-group" id="faction-group">
+      <label for="faction-input">Faction</label>
+      <input type="text" id="faction-input" placeholder="Start typing a faction...">
+      <div id="faction-autocomplete-list" class="autocomplete-items"></div>
     </div>
 
     <button id="generate">Generate</button>
