@@ -51,6 +51,39 @@ h1 {
   display: block;
 }
 
+.input-group select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 100%;
+  padding: 10px 14px;
+  background: #1a1410;
+  border: 2px solid #4a3520;
+  border-radius: 6px;
+  color: #E6D6B1;
+  font-size: 0.95rem;
+  outline: none;
+  transition: 0.2s ease;
+  box-shadow: inset 0 0 6px #000;
+  cursor: pointer;
+  
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23E6D6B1' d='M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 35px;
+}
+
+.input-group select:focus {
+  border-color: #C1914B;
+  background: #211b16;
+}
+
+.input-group select option {
+    background: #0c0a08;
+    color: #E6D6B1;
+    padding: 10px;
+}
+
 .input-group input {
   width: 100%;
   padding: 10px 14px;
@@ -109,7 +142,6 @@ button#generate:hover {
   display: none;
 }
 
-/* === BetterTOS2 Toggle Styling === */
 .btos2-toggle {
   margin-top: 1rem;
   display: flex;
@@ -133,7 +165,6 @@ button#generate:hover {
   color: #F8E9C5;
 }
 
-/* Custom checkbox design */
 .btos2-toggle input[type="checkbox"] {
   appearance: none;
   width: 18px;
@@ -158,7 +189,6 @@ button#generate:hover {
   box-shadow: 0 0 6px #C1914B, inset 0 0 4px #000;
 }
 
-/* Checkmark animation */
 .btos2-toggle input[type="checkbox"]:checked::after {
   content: "";
   position: absolute;
