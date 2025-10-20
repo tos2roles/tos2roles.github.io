@@ -12,8 +12,9 @@ const roles = {
 
   arsonist: 40, baker: 41, berserker: 42, doomsayer: 43, executioner: 44, jester: 45,
   pirate: 46, plaguebearer: 47, serialkiller: 48, shroud: 49, soulcollector: 50,
-  werewolf: 51, vampire: 52, cursedsoul: 53,
-  famine: 250, war: 251, pestilence: 252, death: 253,
+  werewolf: 51, vampire: 52, cursedsoul: 53, famine: 250, war: 251, pestilence: 252,
+  death: 253,
+
   stoned: 254
 };
 
@@ -24,24 +25,25 @@ const factions = {
 };
 
 const btos2_roles = {
-  admirer: 1, amnesiac: 2, bodyguard: 3, cleric: 4, coroner: 5, crusader: 6,
-  deputy: 7, investigator: 8, jailor: 9, lookout: 10, mayor: 11, monarch: 12,
-  prosecutor: 13, psychic: 14, retributionist: 15, seer: 16, sheriff: 17, spy: 18,
-  tavernkeeper: 19, tracker: 20, trapper: 21, trickster: 22, veteran: 23, vigilante: 24,
-  banshee: 54, jackal: 55, marshal: 56, judge: 57, auditor: 58, inquisitor: 59,
-  starspawn: 60, oracle: 61, warlock: 62, catalyst: 63, cultist: 64, socialite: 65, pacifist: 66,
+	admirer: 1, amnesiac: 2, bodyguard: 3, cleric: 4, coroner: 5, crusader: 6,
+	deputy: 7, investigator: 8, jailor: 9, lookout: 10, mayor: 11, monarch: 12,
+	prosecutor: 13, psychic: 14, retributionist: 15, seer: 16, sheriff: 17, spy: 18,
+	tavernkeeper: 19, tracker: 20, trapper: 21, trickster: 22, veteran: 23, vigilante: 24,
+	marshal: 56, pilgrim: 57, catalyst: 63, socialite: 65, pacifist: 66, 
 
-  conjurer: 25, covenleader: 26, dreamweaver: 27, enchanter: 28, hexmaster: 29,
-  illusionist: 30, jinx: 31, medusa: 32, necromancer: 33, poisoner: 34,
-  potionmaster: 35, ritualist: 36, voodoomaster: 37, wildling: 38, witch: 39,
+	conjurer: 25, covenleader: 26, dreamweaver: 27, enchanter: 28, hexmaster: 29,
+	illusionist: 30, jinx: 31, medusa: 32, necromancer: 33, poisoner: 34,
+	potionmaster: 35, ritualist: 36, voodoomaster: 37, wildling: 38, witch: 39,
+	banshee: 54, covenite: 59, cultist: 64,
 
-  arsonist: 40, baker: 41, berserker: 42, doomsayer: 43, executioner: 44, jester: 45,
-  pirate: 46, plaguebearer: 47, serialkiller: 48, shroud: 49, soulcollector: 50,
-  werewolf: 51, vampire: 52, cursedsoul: 53, famine: 250, war: 251, pestilence: 252,
-  death: 253, 
-  
-  stoned: 254
+	arsonist: 40, baker: 41, berserker: 42, doomsayer: 43, executioner: 44, jester: 45,
+	pirate: 46, plaguebearer: 47, serialkiller: 48, shroud: 49, soulcollector: 50,
+	werewolf: 51, vampire: 52, cursedsoul: 53, jackal: 55, auditor: 58, inquisitor: 59, 
+	starspawn: 60, warlock: 62, famine: 250, war: 251, pestilence: 252, death: 253,
+
+	stoned: 254,
 };
+
 
 const btos2_factions = {
   jackal: 33, frogs: 34, lions: 35, hawks: 36, unused: 37, judge: 38, auditor: 39, inquisitor: 40,
