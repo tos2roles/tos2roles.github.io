@@ -14,7 +14,6 @@ const roles = {
   pirate: 46, plaguebearer: 47, serialkiller: 48, shroud: 49, soulcollector: 50,
   werewolf: 51, vampire: 52, cursedsoul: 53,
   famine: 250, war: 251, pestilence: 252, death: 253,
-
   stoned: 254
 };
 
@@ -38,9 +37,9 @@ const btos2_roles = {
 
   arsonist: 40, baker: 41, berserker: 42, doomsayer: 43, executioner: 44, jester: 45,
   pirate: 46, plaguebearer: 47, serialkiller: 48, shroud: 49, soulcollector: 50,
-  werewolf: 51, vampire: 52, cursedsoul: 53,
-  famine: 250, war: 251, pestilence: 252, death: 253,
-
+  werewolf: 51, vampire: 52, cursedsoul: 53, famine: 250, war: 251, pestilence: 252,
+  death: 253, 
+  
   stoned: 254
 };
 
@@ -64,7 +63,7 @@ const factionStyle = {
   starspawn: "background: linear-gradient(to bottom, #FCE79A, #999CFF); -webkit-background-clip: text; -webkit-text-fill-color: transparent;",
   egotist: "background: linear-gradient(to bottom, #359F3F, #3F359F); -webkit-background-clip: text; -webkit-text-fill-color: transparent;",
   pandora: "background: linear-gradient(to bottom, #B545FF, #FF004E); -webkit-background-clip: text; -webkit-text-fill-color: transparent;",
-  compliance: "background: linear-gradient(to bottom, #2D44B5, #AE1B1E, #FC9F32); -webkit-background-clip: text; -webkit-text-fill-color: transparent;",
+  compliance: "background: linear-gradient(to bottom, #2D44B5, #AE1B1E, #FC9F32); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"
 };
 
 const displayNames = {
@@ -94,191 +93,132 @@ const displayNames = {
 
 let availableRoles = {};
 let availableFactions = {};
+const combinedFactions = { ...factions, ...btos2_factions };
 
 function populateData(showBTOS2) {
   const roleTable = showBTOS2 ? btos2_roles : roles;
-  const factionTable = showBTOS2 ? { ...factions, ...btos2_factions } : factions;
+  const factionTable = showBTOS2 ? combinedFactions : factions;
 
-  availableRoles = {};
-  Object.keys(roleTable).forEach(r => {
-    const name = displayNames[r] || r;
-    availableRoles[name] = r;
-  });
-
-  availableFactions = {};
-  Object.keys(factionTable).forEach(f => {
-    const name = displayNames[f] || f.charAt(0).toUpperCase() + f.slice(1);
-    availableFactions[name] = f;
-  });
+  availableRoles = Object.fromEntries(Object.entries(roleTable).map(([k]) => [displayNames[k] || k, k]));
+  availableFactions = Object.fromEntries(Object.entries(factionTable).map(([k]) => [displayNames[k] || k[0].toUpperCase() + k.slice(1), k]));
 }
 
-function autocomplete(inp, dataMap) {
-  let currentFocus;
-  const arr = Object.keys(dataMap);
-  const listContainer = document.getElementById(inp.id.replace('-input', '-autocomplete-list'));
+function autocomplete(input, dataMap) {
+  let currentFocus = -1;
+  const items = Object.keys(dataMap);
+  const list = document.getElementById(input.id.replace('-input', '-autocomplete-list'));
 
-  function closeAllLists(elmnt) {
-    listContainer.innerHTML = '';
-    currentFocus = -1;
-  }
+  const renderList = val => {
+    list.innerHTML = '';
 
-  inp.addEventListener("input", function(e) {
-    let i, val = this.value;
-    closeAllLists();
+    if (!val) return;
 
-    if (!val) { return false; }
-    currentFocus = -1;
+    const query = val.toUpperCase();
 
-    let matchCount = 0;
-    for (i = 0; i < arr.length && matchCount < 20; i++) {
-      const item = arr[i];
-      if (item.toUpperCase().includes(val.toUpperCase())) {
-        matchCount++;
-        const itemElement = document.createElement("DIV");
+    items.filter(i => i.toUpperCase().includes(query)).slice(0, 20).forEach(item => {
+      const idx = item.toUpperCase().indexOf(query);
+      const html = item.substring(0, idx) + `<strong>${item.substring(idx, idx + val.length)}</strong>` + item.substring(idx + val.length);
+      const el = document.createElement('div');
 
-        const start = item.toUpperCase().indexOf(val.toUpperCase());
-        const end = start + val.length;
+      el.innerHTML = html;
+      el.dataset.key = dataMap[item];
+      list.appendChild(el);
+    });
+  };
 
-        const before = item.substring(0, start);
-        const match = item.substring(start, end);
-        const after = item.substring(end);
+  input.addEventListener('input', e => renderList(e.target.value));
 
-        itemElement.innerHTML = before + "<strong>" + match + "</strong>" + after;
+  input.addEventListener('keydown', e => {
+    const divs = list.querySelectorAll('div');
+    if (['ArrowDown', 'ArrowUp', 'Enter'].includes(e.key)) e.preventDefault();
+    if (e.key === 'ArrowDown') currentFocus++;
+    if (e.key === 'ArrowUp') currentFocus--;
+    if (currentFocus >= divs.length) currentFocus = 0;
+    if (currentFocus < 0) currentFocus = divs.length - 1;
+    divs.forEach(d => d.classList.remove('autocomplete-active'));
+    if (divs[currentFocus]) divs[currentFocus].classList.add('autocomplete-active');
+    if (e.key === 'Enter' && divs[currentFocus]) divs[currentFocus].click();
+  });
 
-        itemElement.setAttribute('data-key', dataMap[item]);
-
-        itemElement.addEventListener("click", function(e) {
-          inp.value = this.textContent;
-          inp.setAttribute('data-canonical-key', this.getAttribute('data-key'));
-          closeAllLists();
-        });
-        listContainer.appendChild(itemElement);
-      }
+  list.addEventListener('click', e => {
+    if (e.target.closest('div')) {
+      const el = e.target.closest('div');
+      input.value = el.textContent;
+      input.dataset.canonicalKey = el.dataset.key;
+      list.innerHTML = '';
     }
   });
 
-  inp.addEventListener("keydown", function(e) {
-    let x = listContainer.getElementsByTagName("div");
-    if (e.keyCode == 40) {
-      currentFocus++;
-      addActive(x);
-    } else if (e.keyCode == 38) {
-      currentFocus--;
-      addActive(x);
-    } else if (e.keyCode == 13) {
-      e.preventDefault();
-      if (currentFocus > -1) {
-        if (x) x[currentFocus].click();
-      } else {
-        const matchKey = dataMap[this.value];
-        this.setAttribute('data-canonical-key', matchKey || '');
-        closeAllLists();
-      }
-    }
-  });
-
-  function addActive(x) {
-    if (!x) return false;
-    removeActive(x);
-    if (currentFocus >= x.length) currentFocus = 0;
-    if (currentFocus < 0) currentFocus = (x.length - 1);
-    x[currentFocus].classList.add("autocomplete-active");
-  }
-
-  function removeActive(x) {
-    for (let i = 0; i < x.length; i++) {
-      x[i].classList.remove("autocomplete-active");
-    }
-  }
-
-  document.addEventListener("click", function (e) {
-    if (e.target !== inp && !listContainer.contains(e.target)) {
-      closeAllLists();
-    }
-    const matchKey = dataMap[inp.value];
-    inp.setAttribute('data-canonical-key', matchKey || '');
+  document.addEventListener('click', e => {
+    if (!list.contains(e.target) && e.target !== input) list.innerHTML = '';
+    input.dataset.canonicalKey = dataMap[input.value] || '';
   });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    const roleInput = document.getElementById("role-input");
-    const factionInput = document.getElementById("faction-input");
-    const btos2Toggle = document.getElementById("btos2Toggle");
+  const roleInput = document.getElementById("role-input");
+  const factionInput = document.getElementById("faction-input");
+  const btos2Toggle = document.getElementById("btos2Toggle");
 
-    populateData(btos2Toggle.checked);
+  populateData(btos2Toggle.checked);
+  autocomplete(roleInput, availableRoles);
+  autocomplete(factionInput, availableFactions);
+
+  document.getElementById("generate").addEventListener("click", () => {
+    const role = roleInput.dataset.canonicalKey;
+    const faction = factionInput.dataset.canonicalKey;
+    const roleRaw = roleInput.value.trim();
+    const resultText = document.getElementById("resultText");
+    const output = document.getElementById("output");
+    const copyBtn = document.getElementById("copyBtn");
+    const roleTable = btos2Toggle.checked ? btos2_roles : roles;
+    const factionTable = btos2Toggle.checked ? combinedFactions : factions;
+    const roleKey = role ? roleTable[role] : undefined;
+    const factionKey = faction ? factionTable[faction] : undefined;
+
+    if (!role || !roleKey) {
+      resultText.textContent = "❌ Please select a valid role.";
+      copyBtn.style.display = "none";
+    } else if (!faction || !factionKey) {
+      resultText.textContent = "❌ Please select a valid faction.";
+      copyBtn.style.display = "none";
+    } else {
+      const safeRole = roleRaw.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+      const style = factionStyle[faction] || factionStyle.default;
+
+      resultText.innerHTML = `<span class="role-display" style="${style}">${safeRole}</span>`;
+      resultText.dataset.copy = `[[#${roleKey},${factionKey}]]`;
+      copyBtn.style.display = "inline";
+    }
+
+    output.classList.remove("hidden");
+  });
+
+  btos2Toggle.addEventListener("change", e => {
+    const showBTOS2 = e.target.checked;
+    populateData(showBTOS2);
+
+    document.getElementById("output").classList.add("hidden");
+    roleInput.value = '';
+    factionInput.value = '';
+
+    delete roleInput.dataset.canonicalKey;
+    delete factionInput.dataset.canonicalKey;
+
     autocomplete(roleInput, availableRoles);
     autocomplete(factionInput, availableFactions);
+  });
 
+  document.getElementById("copyBtn").addEventListener("click", async () => {
+    const text = document.getElementById("resultText").dataset.copy;
 
-    document.getElementById("generate").addEventListener("click", () => {
-      const role = roleInput.getAttribute('data-canonical-key');
-      const faction = factionInput.getAttribute('data-canonical-key');
-
-      const roleRaw = roleInput.value.trim();
-
-      const resultText = document.getElementById("resultText");
-      const output = document.getElementById("output");
-      const copyBtn = document.getElementById("copyBtn");
-
-      const roleTable = btos2Toggle.checked ? btos2_roles : roles;
-      const factionTable = btos2Toggle.checked ? { ...factions, ...btos2_factions } : factions;
-      const factionColors = factionStyle;
-
-      const roleKey = role ? roleTable[role] : undefined;
-      const factionKey = faction ? factionTable[faction] : undefined;
-
-
-      if (!role || !roleKey) {
-        resultText.textContent = "❌ Please select a valid role.";
-        copyBtn.style.display = "none";
-      } else if (!faction || !factionKey) {
-        resultText.textContent = "❌ Please select a valid faction.";
-        copyBtn.style.display = "none";
-      } else {
-        const safeRole = roleRaw
-          .replace(/&/g, "&amp;")
-          .replace(/</g, "&lt;")
-          .replace(/>/g, "&gt;");
-
-        const style = factionColors[faction] || factionColors.default;
-
-        resultText.innerHTML = `<span class="role-display" style="${style}">${safeRole}</span>`;
-        resultText.setAttribute("data-copy", `[[#${roleKey},${factionKey}]]`);
-        copyBtn.style.display = "inline";
-      }
-
-      output.classList.remove("hidden");
-    });
-
-    document.getElementById("btos2Toggle").addEventListener("change", (e) => {
-      const showBTOS2 = e.target.checked;
-      populateData(showBTOS2);
-
-      document.getElementById("output").classList.add("hidden");
-
-      roleInput.value = '';
-      factionInput.value = '';
-      roleInput.removeAttribute('data-canonical-key');
-      factionInput.removeAttribute('data-canonical-key');
-
-      autocomplete(roleInput, availableRoles);
-      autocomplete(factionInput, availableFactions);
-    });
-
-    document.getElementById("copyBtn").addEventListener("click", () => {
-      const resultText = document.getElementById("resultText");
-      const text = resultText.getAttribute("data-copy") || resultText.textContent;
-
-      const tempInput = document.createElement("textarea");
-      tempInput.value = text;
-      document.body.appendChild(tempInput);
-      tempInput.select();
-      document.execCommand('copy');
-      document.body.removeChild(tempInput);
-
+    try {
+      await navigator.clipboard.writeText(text);
       const btn = document.getElementById("copyBtn");
       btn.textContent = "✅";
       setTimeout(() => (btn.textContent = "📋"), 1200);
-    });
+    } catch {
+      alert("Clipboard copy failed.");
+    }
+  });
 });
-
