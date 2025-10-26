@@ -3,45 +3,68 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Role > Faction Generator</title>
+  <title>TOS2 Tag Generator</title>
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
   <main class="card">
-    <h1>Role > Faction Generator</h1>
+    <h1 id="page-title">Role > Faction Generator</h1>
 
-    <div class="input-group" id="role-group">
-      <label for="role-input">Role</label>
-      <input autocomplete="off" type="text" id="role-input" placeholder="Start typing a role...">
-      <div id="role-autocomplete-list" class="autocomplete-items"></div>
+    <div class="tab-buttons">
+      <button id="rolesTab" class="active">Roles</button>
+      <button id="achievementsTab">Achievements</button>
     </div>
 
-    <div class="input-group" id="faction-group">
-      <label for="faction-input">Faction</label>
-      <input autocomplete="off" type="text" id="faction-input" placeholder="Start typing a faction...">
-      <div id="faction-autocomplete-list" class="autocomplete-items"></div>
-    </div>
+    <!-- ROLES WINDOW -->
+    <section id="rolesWindow">
+      <div class="input-group">
+        <label for="role-input">Role</label>
+        <input autocomplete="off" type="text" id="role-input" placeholder="Start typing a role...">
+        <div id="role-autocomplete-list" class="autocomplete-items"></div>
+      </div>
 
-    <button id="generate">Generate</button>
+      <div class="input-group">
+        <label for="faction-input">Faction</label>
+        <input autocomplete="off" type="text" id="faction-input" placeholder="Start typing a faction...">
+        <div id="faction-autocomplete-list" class="autocomplete-items"></div>
+      </div>
 
-    <div id="output" class="output hidden">
-      <span id="resultText"></span>
-      <button id="copyBtn" title="Copy">📋</button>
-    </div>
+      <button id="generate">Generate</button>
 
-    <div class="btos2-toggle">
-      <label>
-        <input type="checkbox" id="btos2Toggle">
-        Show BetterTOS2 results
-      </label>
-    </div>
+      <div id="output" class="output hidden">
+        <span id="resultText"></span>
+        <button id="copyBtn" title="Copy">📋</button>
+      </div>
 
+      <div class="btos2-toggle">
+        <label>
+          <input type="checkbox" id="btos2Toggle">
+          Show BetterTOS2 results
+        </label>
+      </div>
+    </section>
+
+    <!-- ACHIEVEMENTS WINDOW -->
+    <section id="achievementsWindow" class="hidden">
+      <div class="input-group">
+        <label for="achievement-input">Achievement</label>
+        <input autocomplete="off" type="text" id="achievement-input" placeholder="Start typing an achievement...">
+        <div id="achievement-autocomplete-list" class="autocomplete-items"></div>
+      </div>
+
+      <button id="generateAchievement">Generate</button>
+
+      <div id="achievement-output" class="output hidden">
+        <span id="achievement-resultText"></span>
+        <button id="achievement-copyBtn" title="Copy">📋</button>
+      </div>
+    </section>
 
     <p class="bottom">Made with ❤️ by rinq</p>
   </main>
-
+  
   <footer class="footer">
-    <p>Generate role names with different faction colours in TOS2</p>
+    <p>Generate tags for roles or achievements in TOS2</p>
     <p>
       <a href="https://github.com/tos2roles/tos2roles.github.io" target="_blank" rel="noopener noreferrer">
         Source Code
