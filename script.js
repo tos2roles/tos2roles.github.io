@@ -1,3 +1,5 @@
+// FACTIONS AND ROLES
+
 const roles = {
   admirer: 1, amnesiac: 2, bodyguard: 3, cleric: 4, coroner: 5, crusader: 6,
   deputy: 7, investigator: 8, jailor: 9, lookout: 10, mayor: 11, monarch: 12,
@@ -223,4 +225,191 @@ document.addEventListener("DOMContentLoaded", () => {
       alert("Clipboard copy failed.");
     }
   });
+});
+
+// ACHIEVEMENTS
+
+const achievements = {
+  "Adoration": 0, "Idolize": 1, "Cherish": 2, "Worship": 3, "Oblivious": 4, "Forgetful": 5,
+  "Clouded Mind": 6, "Blackout": 7, "Chaperon": 8, "Safeguard": 9, "Protector": 10, "Warden": 11,
+  "Priest": 12, "Healer": 13, "Diviner": 14, "Elder": 15, "Medical Examiner": 16, "Autopsy": 17,
+  "Obituary": 18, "Coroner's Report": 19, "Divine Protector": 20, "Righteous Fury": 21,
+  "Devotion": 22, "Deus Vult": 23, "Deputize": 24, "Lieutenant": 25, "Commissioner": 26,
+  "Second-In-Command": 27, "Detective": 28, "Gumshoe": 29, "Private Eye": 30, "Sherlock Holmes": 31,
+  "Prison Warden": 32, "Correctional Officer": 33, "Locked Up": 34, "Penitentiary": 35,
+  "Sentry": 36, "Eagle Eye": 37, "Hawk": 38, "Sentinel": 39, "Supervisor": 40, "Ambassador": 41,
+  "Executive": 42, "Command And Chief": 43, "Emperor": 44, "Royalty": 45, "Sovereign": 46,
+  "Aristocrat": 47, "Attorney": 48, "Litigator": 49, "Indictor": 50, "Blow the Whistle": 51,
+  "Clairvoyant": 52, "Prophet": 53, "Soothsayer": 54, "Oracle": 55, "The Avenger": 56,
+  "Vengeance": 57, "Revitalize": 58, "Reanimate": 59, "Tarot Reader": 60, "Mystic": 61,
+  "Fortune-Teller": 62, "Palm Reader": 63, "Enforce The Law": 64, "Marshall": 65, "Constable": 66,
+  "P.I.": 67, "Espionage": 68, "Sleuth": 69, "Undercover Agent": 70, "CIA": 71, "Inebriated": 72,
+  "Sloshed": 73, "Plastered": 74, "Wasted": 75, "Low Jack": 76, "Pathfinder": 77, "Trail Chaser": 78,
+  "Bloodhound": 79, "It's a Trap!": 80, "Bear Trap": 81, "Hunter": 82, "Master Trapper": 83,
+  "Deceiver": 84, "Conniver": 85, "Swindler": 86, "Charlatan": 87, "Battle-Hardened": 88,
+  "Soldier": 89, "Warrior": 90, "Sergeant": 91, "Mercenary": 92, "Vigilante Justice": 93,
+  "Smoking Gun": 94, "Judicatory": 95, "Constructor": 96, "Inventor": 97, "Fabricator": 98,
+  "Formulation": 99, "Occultist": 100, "Dark Magician": 101, "Charmer": 102, "Diabolist": 103,
+  "The Nightmare": 104, "Insomnia": 105, "Restless": 106, "The Bringer of Insanity": 107,
+  "Enthrall": 108, "Charm": 109, "Hypnotize": 110, "Mesmerize": 111, "Spellslinger": 112,
+  "Accursed": 113, "Hocus Pocus": 114, "Abracadabra": 115, "Hallucination": 116, "Mirage": 117,
+  "Optical Illusion": 118, "Deceptive Imagery": 119, "Bad Luck": 120, "Nemesis": 121,
+  "Misfortune": 122, "Black Cat": 123, "Gaze of Stone": 124, "House of Rock": 125,
+  "Dust to Dust": 126, "The Gorgon": 127, "Raise Zombie!": 128, "Army of the Dead": 129,
+  "Day of the Dead": 130, "Zombie Apocalypse": 131, "Silent but Deadly": 132, "Poison Beverage": 133,
+  "Toxic": 134, "Miasma": 135, "Alchemist": 136, "Eye of Newt": 137, "Vial Juggler": 138,
+  "Elixir of Victory": 139, "Black Magic": 140, "Dark Arts": 141, "Witchcraft": 142,
+  "Blood Ritual": 143, "Mumbo Jumbo": 144, "Bad Juju": 145, "Speechlessness": 146, "Silence": 147,
+  "Ferocious": 148, "Predator": 149, "Devourer": 150, "Apex": 151, "Domination": 152,
+  "Puppet Master": 153, "Marionette": 154, "Warlock": 155, "Pyromaniac": 156, "Firebug": 157,
+  "Incendiary": 158, "Ifrit": 159, "Droughtbringer": 160, "Starvation": 161, "Moldy Bread": 162,
+  "Grain Shortage": 163, "Bloodshed": 164, "Warfare": 165, "Onslaught": 166, "Blitzkrieg": 167,
+  "Cataclysm": 168, "Calamity": 169, "Destiny": 170, "Prediction": 171, "Firing Squad": 172,
+  "Guillotine": 173, "Hangman": 174, "Iron Maiden": 175, "Joker": 176, "Clown": 177,
+  "Prankster": 178, "Lunatic": 179, "ARG!": 180, "Plunder": 181, "X Marks the Spot": 182,
+  "Edward Teach": 183, "Diseased": 184, "Infectious": 185, "Virulent": 186, "Pestilent": 187,
+  "Lonely Killer": 188, "Murderer": 189, "Psychopath": 190, "Sociopath": 191, "Cloak": 192,
+  "Veil": 193, "Shadow": 194, "Shade": 195, "Extinction": 196, "Oblivion": 197, "Grim Reaper": 198,
+  "Shinigami": 199, "Sharp Claws": 200, "Lycan": 201, "Wild Beast": 202, "Mauled": 203,
+  "Initiation": 204, "Novice": 205, "Apprentice": 206, "Dedicated": 207, "Patriarch": 208,
+  "Zealous": 209, "Iconic": 210, "Adept of the Town": 211, "Savant of Magic": 212,
+  "Savant of Neutrality": 213, "Town of Salem Expert": 214, "Close Call": 215, "Marathon": 216,
+  "The Perfect Town": 217, "The Perfect Coven": 218, "Consolation Prize": 219, "Improbable": 220,
+  "Lonely": 221, "Falling In Love": 222, "Gotcha": 223, "Early Lovebirds": 224,
+  "Uncontrollable": 225, "Forgetful Healer": 226, "Distracted Constable": 227,
+  "Absent-Minded Politician": 228, "Asleep On The Job": 229, "I'll Save You!": 230,
+  "Bulletproof": 231, "Tango Down": 232, "Sacrificial Lamb": 233, "Blessed Recovery": 234,
+  "Divine Shield": 235, "Prayer of Mending": 236, "Shield and Barrier": 237, "Postmortem": 238,
+  "DNA Evidence": 239, "Master of Dissection": 240, "Plagued Corpse": 241, "Holy Vengeance": 242,
+  "Blessing of Protection": 243, "Holy Boon": 244, "Trivial Crusade": 245, "Assassination": 246,
+  "Whoops": 247, "Taken Care Of": 248, "Quickdraw": 249, "Clean Record": 250,
+  "Rouge's Gallery": 251, "Cold Lead": 252, "Honeypot": 253, "Execution": 254,
+  "Flawless Executioner": 255, "Making The Right Choice": 256, "Failed Execution": 257,
+  "I See You": 258, "It's A Party": 259, "Prison Watchguard": 260, "Paranormal Town": 261,
+  "Bureaucratic Leadership": 262, "Scales of Justice": 263, "Due Process": 264, "Rigged Jury": 265,
+  "Champion of the Town": 266, "Stacked Jury": 267, "Risky Strategy": 268, "Dictator": 269,
+  "Indict": 270, "Triumphant Prosecution": 271, "Taking One For The Team": 272,
+  "Apocalypse Averted": 273, "Supernatural Vision": 274, "Not Looking Good": 275,
+  "The Gift of Sight": 276, "The Future Can Wait": 277, "Once More Sherlock": 278,
+  "Vigilante's Redemption": 279, "Unholy Crusade": 280, "Self Promotion": 281,
+  "Birds of a Feather": 282, "Opposites Attract": 283, "Broken Crystal Ball": 284,
+  "Bloodbath": 285, "Busted": 286, "Not Suspicious": 287, "Assisted Interrogation": 288,
+  "Rapscallion!": 289, "Sleep It Off": 290, "Operation: Dominion": 291, "Voodoo Spy": 292,
+  "Operative of Dreams": 293, "Let's Party": 294, "Drinking With A Psychopath": 295,
+  "Party of One": 296, "Your Turn": 297, "How Is That Possible?": 298, "This Is Awkward": 299,
+  "What Are You Up To?": 300, "Silly Witch": 301, "Sportsman": 302, "Spring-Loaded": 303,
+  "Busy Night": 304, "War Approaches": 305, "Risky Maneuvers": 306, "Proton Pack": 307,
+  "Taunt the Necronomicon": 308, "Full Moon Trickery": 309, "Massacre": 310,
+  "Weathered Soldier": 311, "Proficient Paranoia": 312, "Going Down Fighting": 313,
+  "Vengeance": 314, "Perfect Shot": 315, "Execute the Executioner": 316, "Ouch": 317,
+  "Rival Gunslinger": 318, "Unwise Reveal": 319, "Dealt With": 320, "Two For One Special": 321,
+  "A Fresh Start": 322, "Hopeless Teacher": 323, "Third Time's a Charm": 324,
+  "Master of Many": 325, "Unsound Mind": 326, "Triple Insanity": 327, "Deep Slumber": 328,
+  "Civilian": 329, "Master of Deceit": 330, "Altered Testament": 331, "Marshal's Will": 332,
+  "Overwhelming Deception": 333, "The First of Many": 334, "Don't Fear The Reaper": 335,
+  "Hexplosion": 336, "See You Soon": 337, "Protect the Book Wielder": 338, "Fantastical": 339,
+  "Assist The Leader": 340, "Covert Obstacle": 341, "No More Protection": 342,
+  "Double Ambush": 343, "Why Are You Here?": 344, "Fullmoon Rampage": 345, "Risky Play": 346,
+  "Hide The Evidence": 347, "Could've Been Anything": 348, "That Was Challenging": 349,
+  "Rampage Once More": 350, "Shadow Mending": 351, "Reanimated Hexplosion": 352,
+  "Wage War Once Again": 353, "Ineffective Brew": 354, "Filibuster": 355, "Isolated": 356,
+  "Death in Isolation": 357, "Bottle Juggler": 358, "Critical Information": 359,
+  "Priorities": 360, "Staredown": 361, "No Guessing Required": 362, "Guaranteed Success": 363,
+  "Dethroned": 364, "Sorcery Vs Doom": 365, "Sewn Shut": 366, "Peace and Quiet": 367,
+  "Sworn to Secrecy": 368, "Silent Ballot": 369, "Red Alert": 370, "Nature's Observer": 371,
+  "Sixth Sense": 372, "Magic Mirror": 373, "Two Birds, One Stone": 374,
+  "Double-Edged Sword": 375, "Controlled Elevation": 376, "Resistance Is Futile": 377,
+  "Disco Inferno": 378, "Blazing Penetentiary": 379, "Drenched": 380,
+  "This Complicates Things": 381, "Feast or Famine": 382, "Swift Famine": 383,
+  "Bars Cannot Stop Famine": 384, "Famine Ravages The Town": 385, "War Emerges": 386,
+  "Racing To War": 387, "The Art of War": 388, "Unstoppable Force": 389,
+  "The Town's Cataclysm": 390, "Calamity of the Coven": 391, "Neutral Catastrophe": 392,
+  "Accelerated Annihilation": 393, "Quick Execution": 394, "The Long Con": 395,
+  "Justice Served Cold": 396, "Difficult Task": 397, "Not Taking Sides": 398,
+  "Prosecution Backfired": 399, "Anti-Town": 400, "Free From Guilt": 401,
+  "Enemy Spotted": 402, "Plunder'em All": 403, "Scalawag!": 404, "Smooth Sailing": 405,
+  "A God Among Us": 406, "Succumbed To Pestilence": 407, "Abrupt Pandemic": 408,
+  "Plundering Plague": 409, "Dexter Morgan": 410, "Bloodlust": 411, "Bay Harbor Butcher": 412,
+  "Avast!": 413, "Stalker's Victim": 414, "Setup": 415, "Framed": 416,
+  "Do You Seer What I Seer?": 417, "Death Itself": 418, "Expeditious Death": 419,
+  "Total Obliteration": 420, "Invincibility": 421, "Jailbreak": 422, "Rampage": 423,
+  "Slicing Up The Coven": 424, "Heartbreak On A Fullmoon": 425, "Partygoer": 426,
+  "Fashionista": 427, "Merrymaker": 428, "Night Owl": 429, "Judiciary": 430, "Hearing": 431,
+  "Council": 432, "Court": 433, "Celebration": 434, "Special Guest": 435, "Disco": 436,
+  "Assembly": 437, "Witchhunt": 438, "Commission for Death": 439, "Fraternity": 440,
+  "Degradation": 441, "Visionary": 442, "Divination": 443, "Aegis Ascendant": 444,
+  "Guardian Angel": 445, "I Got You": 446, "Prophetic Protection": 447, "Close Call": 448,
+  "Safety in Numbers": 449, "Dracula": 450, "Bloodsport": 451, "Bloodbath": 452,
+  "Blood Moon": 453, "Bits, Nibbles and Bites": 454, "Fangs for Voting": 455,
+  "We are Legion": 456, "Unholy Trinity": 457, "Apparition": 458, "Wraith": 459,
+  "Phantom": 460, "Enigma": 461, "Yoink!": 462, "Exorcist": 463, "Merry Go Round": 464,
+  "Spectral Execution": 465, "Live Wire": 466, "Voltage": 467, "Energized": 468,
+  "Overload": 469, "Power Surge": 470, "Vision Overload": 471, "Power Trip": 472,
+  "Overclocked": 473, "Influencer": 474, "Acolyte": 475, "Disciple": 476, "Cult Leader": 477,
+  "One of Us": 478, "Bootlegger": 479, "Corrupt Politician": 480, "Injustice": 481
+};
+
+function setupAchievements() {
+  const input = document.getElementById("achievement-input");
+  const output = document.getElementById("achievement-output");
+  const resultText = document.getElementById("achievement-resultText");
+  const copyBtn = document.getElementById("achievement-copyBtn");
+
+  autocomplete(input, Object.fromEntries(Object.entries(achievements).map(([k, v]) => [k, v])));
+
+  document.getElementById("generateAchievement").addEventListener("click", () => {
+    const key = input.value.trim();
+    if (!achievements.hasOwnProperty(key)) {
+      resultText.textContent = "❌ Please select a valid achievement.";
+      copyBtn.style.display = "none";
+      output.classList.remove("hidden");
+      return;
+    }
+
+    const id = achievements[key];
+    resultText.innerHTML = `<span class="role-display">${key}</span>`;
+    resultText.dataset.copy = `[[~${id}]]`;
+    copyBtn.style.display = "inline";
+    output.classList.remove("hidden");
+  });
+
+  copyBtn.addEventListener("click", async () => {
+    const text = resultText.dataset.copy;
+    try {
+      await navigator.clipboard.writeText(text);
+      copyBtn.textContent = "✅";
+      setTimeout(() => (copyBtn.textContent = "📋"), 1200);
+    } catch {
+      alert("Clipboard copy failed.");
+    }
+  });
+}
+
+function setupTabs() {
+  const rolesTab = document.getElementById("rolesTab");
+  const achievementsTab = document.getElementById("achievementsTab");
+  const rolesWindow = document.getElementById("rolesWindow");
+  const achievementsWindow = document.getElementById("achievementsWindow");
+  const title = document.getElementById("page-title");
+
+  rolesTab.addEventListener("click", () => {
+    rolesTab.classList.add("active");
+    achievementsTab.classList.remove("active");
+    rolesWindow.classList.remove("hidden");
+    achievementsWindow.classList.add("hidden");
+    title.textContent = "Role > Faction Generator";
+  });
+
+  achievementsTab.addEventListener("click", () => {
+    achievementsTab.classList.add("active");
+    rolesTab.classList.remove("active");
+    achievementsWindow.classList.remove("hidden");
+    rolesWindow.classList.add("hidden");
+    title.textContent = "Achievement Tag Generator";
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  setupAchievements();
+  setupTabs();
 });
